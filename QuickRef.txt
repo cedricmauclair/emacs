@@ -1,0 +1,56 @@
+;; ================================================================ ;;
+;;                                                                  ;;
+;;             -- Acme Emacs Quick Reference Card --                ;;
+;;                                                                  ;;
+;;                           -----------                            ;;
+;;                                                                  ;;
+;;   Written by Cedric Mauclair       <CedricMauclair@gmail.com>    ;;
+;;                                                                  ;;
+;;   Overly inspired by Eli Barzilay          <eli@barzilay.org>    ;;
+;;   (And outrageously copied from the same author)                 ;;
+;;                                                                  ;;
+;; ================================================================ ;;
+
+
+Arrow Keys etc:
+               |      [ meta ]      |      [ ctrl ]      |  [ shft + meta ]   |  [ shft + ctrl ]
+  <left/right> | word move          | windmove lft/rght  |                    |
+  <up/down>    | comment +  move    | windmove ud/down   |                    |
+  <home/end>   | other buf beg/end  | beg/end buffer     |                    |
+  <page-up/dn> | scroll other win   | scroll horiz       |                    |
+  <backspace>  | kill word backward | kill word backward |                    |
+  <tab>        | complete           |                    |                    |
+
+
+Function Keys:
+               | [ normal ]     | [ ctrl ]      | [ shift ]       | [ meta ]          | [ shft + meta ]
+  <f1>         | help           | ffap          | open recent     |                   |
+  <f2>         | save buffer    | wrt/move file |                 |                   |
+  <f3>         | insert file    | insert buffer | insert register |                   |
+  <f4>         | shell command  | shell         | term            |                   |
+  <f5>         | query replace  |               | q-replace regex | replace string    | q-replace string
+  <f6>         | drd sg mgc buf | dr tgl buf nm | drd sg mgc here | print curr dir    |
+  <f7>         | del other wins |               |                 |                   |
+  <f8>         | eval lisp expr | eval buffer   | eval region     | byte-compile-file | load elisp file
+  <f9>         | next-error     | mode compile  | grep            | grep find         | apropos
+  <f10>        | kill this buf. |               | edt-srvr-start  | edt-srvr-stop     |
+  <f11>        | fullscreen     |               | marker stuff    | marker copy       |
+  <f12>        | tggl vsl lines |               |                 |                   |
+
+
+General features:
+  <M-z>        start/end recording a keyboard macro.
+  <M-S-z>      zap-to-char
+  <C-enter>    rectangle sel. (cua mode)
+  <C-M-keypad> set a position marker, again for saving more info.
+  <C-keypad>   jump to marker (restore more info).
+
+
+##Local Variables:
+##hide-local-variable-section: t
+##eval:(set-regexp-face "\\(^[^ \n].*:\\)" 'Darkgreen-bold-italic)
+##eval:(set-regexp-face "<[^<>]+>" 'Firebrick-bold)
+##eval:(set-regexp-face "\\[[^][]+\\]" 'Khaki2/SteelBlue4-bold)
+##eval:(set-regexp-face "`[^`']+'" 'maroon4-bold)
+##eval:(set-regexp-face "^[\s]*;;.*;;$" 'h00688b/LightSteelBlue1-bold-italic)
+##End:

@@ -1,0 +1,95 @@
+;; ================================================================ ;;
+;;                                                                  ;;
+;;                Yet again an emacs configuration !                ;;
+;;                                                                  ;;
+;;                           -----------                            ;;
+;;                                                                  ;;
+;;   Written by Cedric Mauclair       <CedricMauclair@gmail.com>    ;;
+;;                                                                  ;;
+;;   Overly inspired by Eli Barzilay          <eli@barzilay.org>    ;;
+;;   (And outrageously copied from the same author)                 ;;
+;;                                                                  ;;
+;; ================================================================ ;;
+
+
+
+* Structure
+
+Petites explications sur l'organisation de cette configuration et de
+sa structure. Il y a un répertoire racine, qu'il faut renommer en
+"emacs" dans son répertoire personnel. Il est possible d'utiliser un
+autre nom, il faut alors penser à modifier toutes les références dans
+le fichier d'initialisation (les experts verront qu'il n'est pas
+nécessaire de tout modifier, mais seulement `emacs-root' pour que cela
+fonctionne aussi. Ceci est souhaitable pour qui veut séparer les
+fichiers de configuration et les fichiers courants : sauvegarde,
+etc.).
+
+Il y a ensuite un sous-répertoire : `lisp'. Il contient les fichiers
+emacs lisp téléchargeables sur l'Internet. Dans le sous-dossier
+`acme', se trouvent les fonctions personnelles (fichiers `my-...') et
+les paramétrages personnels (`custom-...'). Tout est modifiable
+bien-sûr. Les fonctions personnelles ont toutes la forme suivante
+`my:...'. Les gros packages ont un sous-dossier spécifique comme
+AUCTeX, parfois les sous-dossiers servent uniquement à regrouper les
+fonctions qui ont trait aux même choses comme `dired'.
+
+Le fichiers `dotemacs.el' correspond au `.emacs' et doit être
+copier/déplacer/lié vers `~/.emacs'.
+
+Le fichier `QuickRef.txt' rassemble quelques raccourcis claviers qu'il
+est utile de se rappeller et peut être chargé par le raccourci
+                                                            <C-h C-q>.
+
+
+;; ================================================================ ;;
+
+
+* Lancement de emacs [NEW]
+
+Pour lancer `emacs', je suggère les scripts `emd' et `/eml' qui se
+chargent de spécifier les couleurs d'avant- et d'arrière-plan ;
+`emacs' se chargent ensuite d'adapter les couleurs. Pour ces deux
+couleurs uniquement, la personalisation est à faire dans les scripts,
+pour les autres, il faut modifier `.emacs' directement. L'outil
+interne d'`emacs' sauvegarde les sections `custom' à la fin du
+fichier, qui n'est pas là où elles se trouvent actuellement.
+Attention à ne pas se retrouver avec deux sections `custom-variables'
+et `custom-faces' !
+
+
+;; ================================================================ ;;
+
+
+* Vitesse maximale
+
+Une solution (beaucoup) plus rapide consiste à placer les valeurs
+souhaitées dans son fichier ".Xdefaults" ou ".Xresources" : par
+exemple "emacs.geometry: 115x65+0+0". La chaîne "+0+0" indique où le
+coin supérieur gauche de la fenêtre de emacs doit se trouver à une
+distance de "0" en X et "0" en Y du coin supérieur gauche de l'écran.
+Ensuite, il reste à lancer la commande
+                                            < xrdb -merge .Xdefaults >
+pour prendre en compte les modifications. Chez moi par exemple, voici
+la section qui correspond à emacs :
+             emacs*font:        DejaVu Sans Mono-8
+             emacs*fontBackend: xft
+             emacs*geometry:    115x67+0+0
+
+
+Pour finir de booster le tout, il est conseillé de compiler le .emacs.
+Pour cela taper dans un terminal :
+                        < emacs -batch -f batch-byte-compile .emacs >.
+
+
+Have fun!
+Cedric Mauclair
+
+##Local Variables:
+##hide-local-variable-section: t
+##eval:(set-regexp-face "^\\*.*" 'DarkGreen-italic-bold)
+##eval:(set-regexp-face "<[^<>]+>" 'Firebrick-bold)
+##eval:(set-regexp-face "\\[[^][]+\\]" 'Khaki2/SteelBlue4-bold)
+##eval:(set-regexp-face "`[^`']+'" 'Khaki4-bold)
+##eval:(set-regexp-face "^[\s]*;;.*;;$" 'h00688B-bold-italic)
+##End:
