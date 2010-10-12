@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-12 12:53:13 cmauclai>
+; Time-stamp: <2010-10-12 13:55:42 cmauclai>
 
 ;<< Server >>
 (load "server" t t)
@@ -108,8 +108,7 @@ to be hidden.")
 ;>>
 ;<< Hooks: find-file >>
 (put 'hide-local-variable-section 'safe-local-variable 'booleanp)
-(add-hook 'find-file-hooks '(lambda () (hide-local-variable-section t)))
-(add-hook 'find-file-hooks 'undo-tree-mode) ; may require some getting used to
+; (add-hook 'find-file-hooks '(lambda () (hide-local-variable-section t)))
 ;>>
 ;<< Hooks: dired >>
 (put 'dired-find-alternate-file 'disabled nil)
@@ -587,6 +586,7 @@ to be hidden.")
 (if (functionp 'paren-activate) (paren-activate)) ; may not exist
 (defvar explicit-shell-file-name "/bin/bash")
 (setq-default filladapt-mode t filladapt-mode-line-string nil)
+; (global-undo-tree-mode) ; may require some getting used to
 
 ;<< Keybindings >>
 (my:include-content "acme/custom-keybindings.el")
@@ -683,10 +683,11 @@ specified or nil, apply to current frame."
 ;>>
 
 
-; Local Variables:
-; eval:(set-regexp-face "^\s*;;?\\([{]*\\)? =+ .* =+ ;;?$" 'VioletRed4-bold-italic)
-; eval:(set-regexp-face "^\s*;;\\([{]*\\)?\\( \\*+ .* \\*+\\)?$" 'Green4-bold-italic)
-; eval:(set-regexp-face "^\s*;;\\([{]*\\)?\\( \\[+ .* \\]+\\)?$" 'h00688b-bold-italic)
-; eval:(folding-mode t)
-; eval:(rainbow-mode t)
-; End:
+;; Local Variables:
+;; hide-local-variable-section: t
+;; eval:(set-regexp-face "^\s*;+ ?=+\\( [ [:graph:]]+\\)?\\( =+ ?;*\\)?$" 'VioletRed4-bold-italic)
+;; eval:(set-regexp-face "^\s*;+{* \\*+ [ [:graph:]]+ \\*+ ?}*$" 'Green4-bold-italic)
+;; eval:(set-regexp-face "^\s*;+ ?\\[+ [ [:graph:]]+ \\]+$" 'h00688b-bold)
+;; eval:(folding-mode t)
+;; eval:(rainbow-mode t)
+;; End:
