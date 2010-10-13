@@ -13,11 +13,11 @@
 
 (defun pgxml-remove-namespace (string)
   "Remove ns: from ns:elementname."
-  (save-match-data 
+  (save-match-data
     (let ((pos (string-match "^[a-z]+:" string)))
       (if pos
-	  (substring string (match-end 0))
-	string))))
+      (substring string (match-end 0))
+    string))))
 
 
 ;; Copyright (C) 2000, 2001 Free Software Foundation, Inc.
@@ -112,11 +112,11 @@ This is a list of nodes, and it can be nil."
   "Return the children of NODE whose tag is CHILD-NAME.
 CHILD-NAME should be a lower case symbol."
   (let ((children (pgxml-node-children node))
-	match)
+    match)
     (while children
       (if (car children)
-	  (if (equal (pgxml-node-name (car children)) child-name)
-	      (set 'match (append match (list (car children))))))
+      (if (equal (pgxml-node-name (car children)) child-name)
+          (set 'match (append match (list (car children))))))
       (set 'children (cdr children)))
     match))
 
@@ -125,9 +125,9 @@ CHILD-NAME should be a lower case symbol."
 An empty string is returned if the attribute was not found."
   (if (pgxml-node-attributes node)
       (let ((value (assoc attribute (pgxml-node-attributes node))))
-	(if value
-	    (cdr value)
-	  ""))
+    (if value
+        (cdr value)
+      ""))
     ""))
 
 ;;*******************************************************************
@@ -143,18 +143,18 @@ Returns the top node with all its children.
 If PARSE-DTD is non-nil, the DTD is parsed rather than skipped."
   (let ((keep))
     (if (get-file-buffer file)
-	(progn
-	  (set-buffer (get-file-buffer file))
-	  (setq keep (point)))
+    (progn
+      (set-buffer (get-file-buffer file))
+      (setq keep (point)))
       (find-file file))
-    
+
     (let ((pgxml (pgxml-parse-region (point-min)
-				 (point-max)
-				 (current-buffer)
-				 parse-dtd)))
+                 (point-max)
+                 (current-buffer)
+                 parse-dtd)))
       (if keep
-	  (goto-char keep)
-	(kill-buffer (current-buffer)))
+      (goto-char keep)
+    (kill-buffer (current-buffer)))
       pgxml)))
 
 (defun pgxml-parse-region (beg end &optional buffer parse-dtd)
@@ -167,28 +167,28 @@ and returned as the first element of the list"
   (let (pgxml result dtd)
     (save-excursion
       (if buffer
-	  (set-buffer buffer))
+      (set-buffer buffer))
       (goto-char beg)
       (while (< (point) end)
-	(if (search-forward "<" end t)
-	    (progn
-	      (forward-char -1)
-	      (if (null pgxml)
-		  (progn
-		    (set 'result (pgxml-parse-tag end parse-dtd))
-		    (cond
-		     ((listp (car result))
-		      (set 'dtd (car result))
-		      (add-to-list 'pgxml (cdr result)))
-		     (t
-		      (add-to-list 'pgxml result))))
+    (if (search-forward "<" end t)
+        (progn
+          (forward-char -1)
+          (if (null pgxml)
+          (progn
+            (set 'result (pgxml-parse-tag end parse-dtd))
+            (cond
+             ((listp (car result))
+              (set 'dtd (car result))
+              (add-to-list 'pgxml (cdr result)))
+             (t
+              (add-to-list 'pgxml result))))
 
-		;;  translation of rule [1] of XML specifications
-		(error "XML files can have only one toplevel tag")))
-	  (goto-char end)))
+        ;;  translation of rule [1] of XML specifications
+        (error "XML files can have only one toplevel tag")))
+      (goto-char end)))
       (if parse-dtd
-	  (cons dtd (reverse pgxml))
-	(reverse pgxml)))))
+      (cons dtd (reverse pgxml))
+    (reverse pgxml)))))
 
 
 (defun pgxml-parse-tag (end &optional parse-dtd)
@@ -211,18 +211,18 @@ Returns one of:
    ((looking-at "<!\\[CDATA\\[")
     (let ((pos (match-end 0)))
       (unless (search-forward "]]>" end t)
-	(error "CDATA section does not end anywhere in the document"))
+    (error "CDATA section does not end anywhere in the document"))
       (buffer-substring-no-properties pos (match-beginning 0))))
    ;;  DTD for the document
    ((looking-at "<!DOCTYPE")
     (let (dtd)
       (if parse-dtd
-	  (set 'dtd (pgxml-parse-dtd end))
-	(pgxml-skip-dtd end))
+      (set 'dtd (pgxml-parse-dtd end))
+    (pgxml-skip-dtd end))
       (skip-chars-forward " \t\n")
       (if dtd
-	  (cons dtd (pgxml-parse-tag end))
-	(pgxml-parse-tag end))))
+      (cons dtd (pgxml-parse-tag end))
+    (pgxml-parse-tag end))))
    ;;  skip comments
    ((looking-at "<!--")
     (search-forward "-->" end)
@@ -235,9 +235,9 @@ Returns one of:
    ;;  opening tag
    ((looking-at "<\\([^/> \t\n]+\\)")
     (let* ((node-name (match-string 1))
-	   (children (list (intern (pgxml-remove-namespace node-name))))
-	   (case-fold-search nil) ;; XML is case-sensitive
-	   pos)
+       (children (list (intern (pgxml-remove-namespace node-name))))
+       (case-fold-search nil) ;; XML is case-sensitive
+       pos)
       (goto-char (match-end 1))
 
       ;; parses the attribute list
@@ -245,58 +245,58 @@ Returns one of:
 
       ;; is this an empty element ?
       (if (looking-at "/>")
-	  (progn
-	    (forward-char 2)
-	    (skip-chars-forward " \t\n")
-	    (append children '("")))
+      (progn
+        (forward-char 2)
+        (skip-chars-forward " \t\n")
+        (append children '("")))
 
-	;; is this a valid start tag ?
-	(if (eq (char-after) ?>)
-	    (progn
-	      (forward-char 1)
-	      (skip-chars-forward " \t\n")
-	      ;;  Now check that we have the right end-tag. Note that this one might
-	      ;;  contain spaces after the tag name
-	      (while (not (looking-at (concat "</" node-name "[ \t\n]*>")))
-		(cond
-		 ((looking-at "</")
-		  (error (concat
-			  "XML: invalid syntax -- invalid end tag (expecting "
-			  node-name
-			  ") at pos " (number-to-string (point)))))
-		 ((= (char-after) ?<)
-		  ;; patch from stefan monnier because of wrong comments
-		  ;;(set 'children (append children (list (pgxml-parse-tag end))))) 
-		  (let ((tag (pgxml-parse-tag end)))
-		    (when tag
-		      (setq children (append children (list tag))))))
-		 (t
-		  (setq pos (point))
-		  (search-forward "<" end)
-		  (forward-char -1)
-		  (let ((string (buffer-substring-no-properties pos (point)))
-			(pos 0))
-		    
-		    ;; Clean up the string (no newline characters)
-		    ;; Not done, since as per XML specifications, the XML processor
-		    ;; should always pass the whole string to the application.
-		    ;; 	    (while (string-match "\\s +" string pos)
-		    ;; 	      (set 'string (replace-match " " t t string))
-		    ;; 	      (set 'pos (1+ (match-beginning 0))))
-		    
-		    (set 'children (append children
-					   (list (pgxml-substitute-special string))))))))
-	      (goto-char (match-end 0))
-	      (skip-chars-forward " \t\n")
-	      (if (> (point) end)
-		  (error "XML: End tag for %s not found before end of region"
-			 node-name))
-	      children
-	      )
+    ;; is this a valid start tag ?
+    (if (eq (char-after) ?>)
+        (progn
+          (forward-char 1)
+          (skip-chars-forward " \t\n")
+          ;;  Now check that we have the right end-tag. Note that this one might
+          ;;  contain spaces after the tag name
+          (while (not (looking-at (concat "</" node-name "[ \t\n]*>")))
+        (cond
+         ((looking-at "</")
+          (error (concat
+              "XML: invalid syntax -- invalid end tag (expecting "
+              node-name
+              ") at pos " (number-to-string (point)))))
+         ((= (char-after) ?<)
+          ;; patch from stefan monnier because of wrong comments
+          ;;(set 'children (append children (list (pgxml-parse-tag end)))))
+          (let ((tag (pgxml-parse-tag end)))
+            (when tag
+              (setq children (append children (list tag))))))
+         (t
+          (setq pos (point))
+          (search-forward "<" end)
+          (forward-char -1)
+          (let ((string (buffer-substring-no-properties pos (point)))
+            (pos 0))
 
-	  ;;  This was an invalid start tag
-	  (error "XML: Invalid attribute list")
-	  ))))
+            ;; Clean up the string (no newline characters)
+            ;; Not done, since as per XML specifications, the XML processor
+            ;; should always pass the whole string to the application.
+            ;;      (while (string-match "\\s +" string pos)
+            ;;        (set 'string (replace-match " " t t string))
+            ;;        (set 'pos (1+ (match-beginning 0))))
+
+            (set 'children (append children
+                       (list (pgxml-substitute-special string))))))))
+          (goto-char (match-end 0))
+          (skip-chars-forward " \t\n")
+          (if (> (point) end)
+          (error "XML: End tag for %s not found before end of region"
+             node-name))
+          children
+          )
+
+      ;;  This was an invalid start tag
+      (error "XML: Invalid attribute list")
+      ))))
    (t ;; This is not a tag.
     (error "XML: Invalid character"))
    ))
@@ -306,7 +306,7 @@ Returns one of:
 The search for attributes end at the position END in the current buffer.
 Leaves the point on the first non-blank character after the tag."
   (let ((attlist '())
-	name)
+    name)
     (skip-chars-forward " \t\n")
     (while (looking-at "\\([a-zA-Z_:][-a-zA-Z0-9._:]*\\)[ \t\n]*=[ \t\n]*")
       (set 'name (intern (match-string 1)))
@@ -315,23 +315,23 @@ Leaves the point on the first non-blank character after the tag."
       ;; Do we have a string between quotes (or double-quotes),
       ;;  or a simple word ?
       (unless (looking-at "\"\\([^\"]+\\)\"")
-	(unless (looking-at "'\\([^']+\\)'")
-	  (error "XML: Attribute values must be given between quotes")))
+    (unless (looking-at "'\\([^']+\\)'")
+      (error "XML: Attribute values must be given between quotes")))
 
       ;; Each attribute must be unique within a given element
       ;; is that really true? A.3.3 sm/"xml in der Praxis" --pg 10/2001
 ;;       (if (assoc name attlist)
-;; 	  (error "XML: each attribute must be unique within an element"))
-      
+;;    (error "XML: each attribute must be unique within an element"))
+
 ;;       (set 'attlist (append attlist
-;; 			    (list (cons name (match-string-no-properties 1)))))
+;;              (list (cons name (match-string-no-properties 1)))))
       (unless (assoc name attlist)
       (set 'attlist (append attlist
-			    (list (cons name (match-string-no-properties 1))))))
+                (list (cons name (match-string-no-properties 1))))))
       (goto-char (match-end 0))
       (skip-chars-forward " \t\n")
       (if (> (point) end)
-	  (error "XML: end of attribute list not found before end of region"))
+      (error "XML: end of attribute list not found before end of region"))
       )
     attlist
     ))
@@ -354,11 +354,11 @@ This follows the rule [28] in the XML specifications."
       (error "XML: invalid DTD (excepting name of the document)"))
   (condition-case nil
       (progn
-	(forward-word 1)  ;; name of the document
-	(skip-chars-forward " \t\n")
-	(if (looking-at "\\[")
-	    (re-search-forward "\\][ \t\n]*>" end)
-	  (search-forward ">" end)))
+    (forward-word 1)  ;; name of the document
+    (skip-chars-forward " \t\n")
+    (if (looking-at "\\[")
+        (re-search-forward "\\][ \t\n]*>" end)
+      (search-forward ">" end)))
     (error (error "XML: No end to the DTD"))))
 
 (defun pgxml-parse-dtd (end)
@@ -368,7 +368,7 @@ The DTD must end before the position END in the current buffer."
     (forward-char (length "<!DOCTYPE"))
     (skip-chars-forward " \t\n")
     (if (looking-at ">")
-	(error "XML: invalid DTD (excepting name of the document)"))
+    (error "XML: invalid DTD (excepting name of the document)"))
 
     ;;  Get the name of the document
     (looking-at "\\sw+")
@@ -379,51 +379,51 @@ The DTD must end before the position END in the current buffer."
 
     ;;  External DTDs => don't know how to handle them yet
     (if (looking-at "SYSTEM")
-	(error "XML: Don't know how to handle external DTDs"))
-    
+    (error "XML: Don't know how to handle external DTDs"))
+
     (if (not (= (char-after) ?\[))
-	(error "XML: Unknown declaration in the DTD"))
+    (error "XML: Unknown declaration in the DTD"))
 
     ;;  Parse the rest of the DTD
     (forward-char 1)
     (while (and (not (looking-at "[ \t\n]*\\]"))
-		(<= (point) end))
+        (<= (point) end))
       (cond
 
        ;;  Translation of rule [45] of XML specifications
        ((looking-at
-	 "[\t \n]*<!ELEMENT[ \t\n]+\\([a-zA-Z0-9.%;]+\\)[ \t\n]+\\([^>]+\\)>")
+     "[\t \n]*<!ELEMENT[ \t\n]+\\([a-zA-Z0-9.%;]+\\)[ \t\n]+\\([^>]+\\)>")
 
-	(setq element (intern (match-string-no-properties 1))
-	      type    (match-string-no-properties 2))
-	(set 'end-pos (match-end 0))
-	
-	;;  Translation of rule [46] of XML specifications
-	(cond
-	 ((string-match "^EMPTY[ \t\n]*$" type)     ;; empty declaration
-	  (set 'type 'empty))
-	 ((string-match "^ANY[ \t\n]*$" type)       ;; any type of contents
-	  (set 'type 'any))
-	 ((string-match "^(\\(.*\\))[ \t\n]*$" type) ;; children ([47])
-	  (set 'type (pgxml-parse-elem-type (match-string-no-properties 1 type))))
-	 ((string-match "^%[^;]+;[ \t\n]*$" type)   ;; substitution
-	  nil)
-	 (t
-	  (error "XML: Invalid element type in the DTD")))
+    (setq element (intern (match-string-no-properties 1))
+          type    (match-string-no-properties 2))
+    (set 'end-pos (match-end 0))
 
-	;;  rule [45]: the element declaration must be unique
-	(if (assoc element dtd)
-	    (error "XML: elements declaration must be unique in a DTD (<%s>)"
-		   (symbol-name element)))
-	
-	;;  Store the element in the DTD
-	(set 'dtd (append dtd (list (list element type))))
-	(goto-char end-pos)
-	)
+    ;;  Translation of rule [46] of XML specifications
+    (cond
+     ((string-match "^EMPTY[ \t\n]*$" type)     ;; empty declaration
+      (set 'type 'empty))
+     ((string-match "^ANY[ \t\n]*$" type)       ;; any type of contents
+      (set 'type 'any))
+     ((string-match "^(\\(.*\\))[ \t\n]*$" type) ;; children ([47])
+      (set 'type (pgxml-parse-elem-type (match-string-no-properties 1 type))))
+     ((string-match "^%[^;]+;[ \t\n]*$" type)   ;; substitution
+      nil)
+     (t
+      (error "XML: Invalid element type in the DTD")))
+
+    ;;  rule [45]: the element declaration must be unique
+    (if (assoc element dtd)
+        (error "XML: elements declaration must be unique in a DTD (<%s>)"
+           (symbol-name element)))
+
+    ;;  Store the element in the DTD
+    (set 'dtd (append dtd (list (list element type))))
+    (goto-char end-pos)
+    )
 
 
        (t
-	(error "XML: Invalid DTD item"))
+    (error "XML: Invalid DTD item"))
        )
       )
 
@@ -438,35 +438,35 @@ The DTD must end before the position END in the current buffer."
 
   (let (elem modifier)
     (if (string-match "(\\([^)]+\\))\\([+*?]?\\)" string)
-	(progn
-	  (setq elem     (match-string 1 string)
-		modifier (match-string 2 string))
-	  (if (string-match "|" elem)
-	      (set 'elem (append '(choice)
-			       (mapcar 'pgxml-parse-elem-type
-				       (split-string elem "|"))))
-	    (if (string-match "," elem)
-		(set 'elem (append '(seq)
-				 (mapcar 'pgxml-parse-elem-type
-					 (split-string elem ","))))
-	      )))
+    (progn
+      (setq elem     (match-string 1 string)
+        modifier (match-string 2 string))
+      (if (string-match "|" elem)
+          (set 'elem (append '(choice)
+                   (mapcar 'pgxml-parse-elem-type
+                       (split-string elem "|"))))
+        (if (string-match "," elem)
+        (set 'elem (append '(seq)
+                 (mapcar 'pgxml-parse-elem-type
+                     (split-string elem ","))))
+          )))
       (if (string-match "[ \t\n]*\\([^+*?]+\\)\\([+*?]?\\)" string)
-	  (setq elem     (match-string 1 string)
-		modifier (match-string 2 string))))
+      (setq elem     (match-string 1 string)
+        modifier (match-string 2 string))))
 
       (if (and (stringp elem)
-	       (string= elem "#PCDATA"))
-	  (set 'elem 'pcdata))
-    
+           (string= elem "#PCDATA"))
+      (set 'elem 'pcdata))
+
       (cond
        ((string= modifier "+")
-	(list '+ elem))
+    (list '+ elem))
        ((string= modifier "*")
-	(list '* elem))
+    (list '* elem))
        ((string= modifier "?")
-	(list '? elem))
+    (list '? elem))
        (t
-	elem))))
+    elem))))
 
 
 ;;*******************************************************************
@@ -506,40 +506,40 @@ The DTD must end before the position END in the current buffer."
   "Outputs the XML tree in the current buffer.
 The first line indented with INDENT-STRING."
   (let ((tree xml)
-	attlist)
+    attlist)
     (unless indent-string
       (set 'indent-string ""))
-    
+
     (insert indent-string "<" (symbol-name (pgxml-node-name tree)))
-    
+
     ;;  output the attribute list
     (set 'attlist (pgxml-node-attributes tree))
     (while attlist
       (insert " ")
       (insert (symbol-name (caar attlist)) "=\"" (cdar attlist) "\"")
       (set 'attlist (cdr attlist)))
-    
+
     (insert ">")
-    
+
     (set 'tree (pgxml-node-children tree))
 
     ;;  output the children
     (while tree
       (cond
        ((listp (car tree))
-	(insert "\n")
-	(pgxml-debug-print-internal (car tree) (concat indent-string "  "))
-	)
+    (insert "\n")
+    (pgxml-debug-print-internal (car tree) (concat indent-string "  "))
+    )
        ((stringp (car tree))
-	(insert (car tree))
-	)
+    (insert (car tree))
+    )
        (t
-	(error "Invalid XML tree")))
+    (error "Invalid XML tree")))
       (set 'tree (cdr tree))
      )
 
     (insert "\n" indent-string
-	    "</" (symbol-name (pgxml-node-name xml)) ">")
+        "</" (symbol-name (pgxml-node-name xml)) ">")
     ))
 
 (provide 'pgxml)

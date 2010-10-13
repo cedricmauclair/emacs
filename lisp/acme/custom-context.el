@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-12 11:33:00 cmauclai>
+; Time-stamp: <2010-10-13 10:34:20 cmauclai>
 
 (when (load "auctex" t t)
   (defcustom ConTeXt-users-macro-list nil
@@ -43,10 +43,9 @@
   (defvar etexshow-xml-files-alist nil)
   (when (load "etexshow" t t)
     (setq etexshow-xml-files-alist
-      '(("~/emacs/lisp/etexshow/cont-en.xml" .
-         "~/emacs/lisp/etexshow/cont-en.cache")
-        ("~/emacs/lisp/etexshow/mycommands.xml" .
-         "~/emacs/lisp/etexshow/mycommands.cache")))
+      '(("~/emacs/lisp/etexshow/cont-en.xml" . "~/emacs/lisp/etexshow/cont-en.cache")
+        ("~/emacs/lisp/etexshow/mycommands.xml" . "~/emacs/lisp/etexshow/mycommands.cache")))
+    (setq etexshow-comment-file "~/emacs/lisp/etexshow/cont-en-comments.xml" )
     (add-hook 'etexshow-mode-hook
               '(lambda () (local-set-key (kbd "<f7>") 'etexshow-quit))))
 
