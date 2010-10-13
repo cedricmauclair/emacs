@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-13 10:05:45 cmauclai>
+; Time-stamp: <2010-10-13 13:55:37 cmauclai>
 
 ;<< Server >>
 (load "server" t t)
@@ -680,7 +680,7 @@ specified or nil, apply to current frame."
   (global-set-key (kbd "C-c d") 'my:delim-kill))
 ;>>
 ;<< Modes >>
-(load "custom-context" t t)
+(autoload 'context-mode "custom-context")
 ;>>
 
 
