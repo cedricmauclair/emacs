@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-13 16:18:06 cmauclai>
+; Time-stamp: <2010-10-13 16:25:59 cmauclai>
 
 (when (load "auctex" t t)
   (defcustom ConTeXt-modes-list nil
@@ -106,7 +106,7 @@
         (local-set-key (kbd "C-c C-c")
                        (lambda ()
                          (interactive) (save-buffer) (my:compile "make -k")))
-      (local-set-key (kbd "C-c C-c") 'TeX-master-command))
+      (local-set-key (kbd "C-c C-c") 'TeX-command-master))
     (setq ConTeXt-use-makefile (not ConTeXt-use-makefile)))
 
   (add-hook 'ConTeXt-mode-hook 'my-hooks:context-mode))
