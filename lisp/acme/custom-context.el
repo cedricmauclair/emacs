@@ -1,6 +1,11 @@
-; Time-stamp: <2010-10-13 16:25:59 cmauclai>
+; Time-stamp: <2010-10-13 16:31:13 cmauclai>
 
 (when (load "auctex" t t)
+  (defun my:tex-unbreakable-space ()
+    "Insère '~' pour inserer une espace insécable sous (La|Con)TeX(|t)."
+    (interactive)
+    (insert "~"))
+
   (defcustom ConTeXt-modes-list nil
     "List of modes to run ConTeXt with."
     :group 'AUCTeX
@@ -69,6 +74,10 @@
   (my-context:insert quote   "\\quote{" "}")
   (my-context:insert inline  "|<|" "|>|")
 
+  (defun my:context-view-memoir ()
+    (interactive)
+    (shell-command "pdfopen -viewer xpdf ~/memoir/phd-thesis-memoir.pdf"))
+
   (defun my-hooks:context-mode ()
     (load "texmathp" t t)
 
@@ -84,19 +93,22 @@
     (my:define-keys 'local
                     '("C-c C-c" (lambda ()
                                   (interactive) (save-buffer) (my:compile "make -k")))
+                    '("C-c C-v" my:context-view-memoir)
                     ; insert strings in the buffer
                     '("C-c i"   nil)
                     '("C-c i d" my:enclose-in-doubt)
                     '("C-c i e" my:enclose-in-english)
                     '("C-c i q" my:enclose-in-quote)
                     '("C-c i i" my:enclose-in-inline)
-                    '(" "       my:latex-unbreakable-space)
+                    '(" "       my:tex-unbreakable-space)
                                         ; some help for the commands
                     '("<f7>"    etexshow-cmd)
                     '("<S-f7>"  etexshow)
                                         ; other
                     '("M-q"     LaTeX-fill-paragraph))
 
+    (setq TeX-engine 'luatex)
+    (setq TeX-command-default "ConTeXt Full")
     (auto-fill-mode t)
     (setq fill-column 77))
 
