@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-12 13:55:42 cmauclai>
+; Time-stamp: <2010-10-13 10:05:45 cmauclai>
 
 ;<< Server >>
 (load "server" t t)
@@ -676,7 +676,8 @@ specified or nil, apply to current frame."
       (if stop
           (delim-kill start stop (point) save))))
 
-  (global-set-key (kbd "M-k") 'my:delim-kill))
+  (global-set-key (kbd "M-k") 'my:delim-kill)
+  (global-set-key (kbd "C-c d") 'my:delim-kill))
 ;>>
 ;<< Modes >>
 (load "custom-context" t t)
@@ -688,6 +689,7 @@ specified or nil, apply to current frame."
 ;; eval:(set-regexp-face "^\s*;+ ?=+\\( [ [:graph:]]+\\)?\\( =+ ?;*\\)?$" 'VioletRed4-bold-italic)
 ;; eval:(set-regexp-face "^\s*;+{* \\*+ [ [:graph:]]+ \\*+ ?}*$" 'Green4-bold-italic)
 ;; eval:(set-regexp-face "^\s*;+ ?\\[+ [ [:graph:]]+ \\]+$" 'h00688b-bold)
+;; eval:(set-regexp-face "^\s*;+ ?<+ [ [:graph:]]+ >+$" 'h00688b-bold)
 ;; eval:(folding-mode t)
 ;; eval:(rainbow-mode t)
 ;; End:
