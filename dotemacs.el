@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-13 16:04:00 cmauclai>
+; Time-stamp: <2010-10-14 15:10:55 cmauclai>
 
 ;<< Server >>
 
@@ -676,15 +676,71 @@ specified or nil, apply to current frame."
       (?\" _ ?\") (?\' _ ?\')))
 
   (defun my:delim-kill (start save)
-    "Kill text between delimiters based on a table to determine
-  the other character."
+    "Kill text between delimiters based on a table of delimiter pairs."
     (interactive "cDelimiter: \nP")
     (let ((stop (car (cddr (assoc start my:delim-kill-pair-alist)))))
       (if stop
           (delim-kill start stop (point) save))))
 
-  (global-set-key (kbd "M-k") 'my:delim-kill)
-  (global-set-key (kbd "C-c d") 'my:delim-kill))
+  (defun my:delim-mark (&optional start include)
+    "Mark text between delimiters based on a table of delimiter pairs."
+    (interactive "cDelimiter: \nP")
+    (setq this-command 'delim-mark-it)
+    (if (not (eq last-command this-command))
+        (setq delim-mark-include nil)
+      (backward-char)
+      (setq delim-mark-include (not delim-mark-include)))
+    (cond
+     (start
+      (setq delim-mark-start start)
+      (setq delim-mark-stop (car (cddr (assoc start my:delim-kill-pair-alist))))
+      (delim-mark delim-mark-start delim-mark-stop (point) delim-mark-include))
+     ((and (eq last-command this-command) delim-mark-start)
+      (delim-mark delim-mark-start delim-mark-stop (point) delim-mark-include))
+     (t
+      (setq delim-mark-start nil)
+      (setq delim-mark-stop nil)
+      (while (not (assoc (char-after) my:delim-kill-pair-alist))
+        (condition-case nil
+            (backward-char)
+          (error nil)))
+      (setq start (char-after))
+      (setq stop (car (cddr (assoc (char-after) my:delim-kill-pair-alist))))
+      (delim-mark start stop (point) delim-mark-include))))
+
+  (defun delim-mark (from-char to-char orig-point include)
+  "Mark the text between two characters, preserving balance.
+
+Marks the text between the first occurence of FROM before point
+and the first occurence of TO after point, including FROM and TO
+if specified."
+  (interactive "cFrom: \ncTo: \nd\nP")
+    (let* ((from (delim-find-char-balanced-backward from-char to-char))
+           (to (delim-find-char-balanced-forward  from-char to-char)))
+      (if (and from to)
+          (progn
+            (delim-mark-it from to include))
+        (message "Not found!"))))
+
+  (defun delim-mark-it (from to include)
+    (message "%s" (buffer-substring from to))
+    (let ((from (if include from (1+ from)))
+          (to (if include to (1- to))))
+      (goto-char to)
+      (push-mark-command nil)
+      (goto-char from)))
+
+  (my:define-keys 'global
+    '("M-k" my:delim-kill)
+    '("C-c d" my:delim-kill)
+    '("C-c m" nil)
+    '("C-c m \(" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?\()))
+    '("C-c m {" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?{)))
+    '("C-c m [" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?[)))
+    '("C-c m <" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?<)))
+    '("C-c m \"" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?\")))
+    '("C-c m '" (lambda nil (interactive) (setq this-command 'delim-mark-it) (my:delim-mark ?\')))
+    '("C-c m m" my:delim-mark nil))) ; try to be smart
 ;>>
 ;<< Modes >>
 ;-- ConTeXt --
