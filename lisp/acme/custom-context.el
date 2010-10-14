@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-13 16:31:13 cmauclai>
+; Time-stamp: <2010-10-14 16:25:37 cmauclai>
 
 (when (load "auctex" t t)
   (defun my:tex-unbreakable-space ()
@@ -110,7 +110,7 @@
     (setq TeX-engine 'luatex)
     (setq TeX-command-default "ConTeXt Full")
     (auto-fill-mode t)
-    (setq fill-column 77))
+    (setq fill-column 80))
 
   (defun ConTeXt-switch-makefile-AUCTeX ()
     (interactive)
