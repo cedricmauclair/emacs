@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-14 15:10:55 cmauclai>
+; Time-stamp: <2010-10-18 13:06:47 cmauclai>
 
 ;<< Server >>
 
@@ -594,6 +594,7 @@ to be hidden.")
 (defvar explicit-shell-file-name "/bin/bash")
 (setq-default filladapt-mode t filladapt-mode-line-string nil)
 ; (global-undo-tree-mode) ; may require some getting used to
+(winner-mode t)
 
 ;<< Keybindings >>
 (my:include-content "acme/custom-keybindings.el")
