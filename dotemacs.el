@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-19 10:46:59 cmauclai>
+; Time-stamp: <2010-10-19 11:31:34 cmauclai>
 
 ;<< Server >>
 
@@ -218,7 +218,7 @@ to be hidden.")
  '(font-latex-match-italic-command-keywords nil)
  '(font-latex-match-italic-declaration-keywords (quote (("italic" "") ("slanted" "") ("english" ""))))
  '(font-latex-match-math-command-keywords (quote (("math" "{") ("mathematics" "{"))))
- '(font-latex-match-reference-keywords (quote (("NN" "[") ("NC" "[") ("AR" "[") ("FR" "[") ("MR" "[") ("LR" "[") ("HL" "[") ("NR" "[") ("SR" "[") ("DL" "[") ("DC" "[") ("about" "{|{{[") ("at" "{|{{[") ("atpage" "[") ("in" "{|{{[") ("inchp" "[") ("insec" "[") ("infig" "[") ("intab" "[") ("ineq" "[") ("ref" "[[") ("reference" "[["))))
+ '(font-latex-match-reference-keywords (quote (("NN" "[") ("NC" "[") ("AR" "[") ("FR" "[") ("MR" "[") ("LR" "[") ("HL" "[") ("NR" "[") ("SR" "[") ("DL" "[") ("DC" "[") ("about" "[|{{[") ("at" "[|{{[") ("atpage" "[") ("in" "[|{{[") ("inchp" "[") ("insec" "[") ("infig" "[") ("intab" "[") ("ineq" "[") ("ref" "[[") ("reference" "[["))))
  '(font-latex-match-sectioning-0-keywords (quote (("startpart" "[[") ("stoppart" ""))))
  '(font-latex-match-sectioning-1-keywords (quote (("title" "[{") ("startchapter" "[[") ("stopchapter"))))
  '(font-latex-match-sectioning-2-keywords (quote (("subject" "[{") ("startsection" "[[") ("stopsection"))))
