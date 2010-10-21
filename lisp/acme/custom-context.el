@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-14 16:25:37 cmauclai>
+; Time-stamp: <2010-10-21 13:21:51 cmauclai>
 
 (when (load "auctex" t t)
   (defun my:tex-unbreakable-space ()
@@ -71,7 +71,7 @@
 
   (my-context:insert doubt   "\\doute{" "}")
   (my-context:insert english "{\\english " "}")
-  (my-context:insert quote   "\\quote{" "}")
+  (my-context:insert quote   "« " " »")
   (my-context:insert inline  "|<|" "|>|")
 
   (defun my:context-view-memoir ()
