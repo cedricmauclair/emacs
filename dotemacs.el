@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-19 11:31:34 cmauclai>
+; Time-stamp: <2010-10-21 11:29:25 cmauclai>
 
 ;<< Server >>
 
@@ -605,10 +605,9 @@ to be hidden.")
   '("C-c t d" my:dark-theme)
   '("C-c t l" my:light-theme)
   ; personnal, more or less easy to type keybindings
-  '("C-c c"   nil)
-  '("C-c c m" menu-bar-mode)
-  '("C-c c o" overwrite-mode)
-  '("C-c c i" overwrite-mode)
+  '("C-c t m" menu-bar-mode)
+  '("C-c t o" overwrite-mode)
+  '("C-c t i" overwrite-mode)
   '("M-g"     goto-line))
 (windmove-default-keybindings 'control)
 ;>>
