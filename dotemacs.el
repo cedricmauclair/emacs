@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-21 11:29:25 cmauclai>
+; Time-stamp: <2010-10-21 14:24:28 cmauclai>
 
 ;<< Server >>
 
@@ -609,6 +609,10 @@ to be hidden.")
   '("C-c t o" overwrite-mode)
   '("C-c t i" overwrite-mode)
   '("M-g"     goto-line))
+(global-set-key
+ (kbd "<backtab>") (read-kbd-macro "C-x C-\\340 RET"))
+
+
 (windmove-default-keybindings 'control)
 ;>>
 ;<< Themes >>
