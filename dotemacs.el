@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-21 14:24:28 cmauclai>
+; Time-stamp: <2010-10-28 15:18:59 cmauclai>
 
 ;<< Server >>
 
@@ -125,6 +125,7 @@ to be hidden.")
   (local-set-key (kbd "M-g")     'folding-goto-line)
   (local-set-key (kbd "C-c f")    nil)
   (local-set-key (kbd "M-RET")   'folding-toggle-show-hide)
+  (local-set-key (kbd "M-ESC M-ESC") 'folding-toggle-show-hide)
   (local-set-key (kbd "C-c f s") 'folding-show-current-subtree)
   (local-set-key (kbd "C-c f h") 'folding-hide-current-subtree)
   (local-set-key (kbd "C-c f o") 'folding-open-buffer)
