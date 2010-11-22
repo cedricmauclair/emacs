@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-21 13:21:51 cmauclai>
+; Time-stamp: <2010-10-29 10:53:24 cmauclai>
 
 (when (load "auctex" t t)
   (defun my:tex-unbreakable-space ()

@@ -1,4 +1,4 @@
-; Time-stamp: <2010-10-29 14:57:54 cmauclai>
+; Time-stamp: <2010-11-05 13:51:39 cmauclai>
 
 ;<< Server >>
 
@@ -83,7 +83,7 @@ to be hidden.")
 ;<< Packages >>
 (eval-and-compile
   (defconst packages-to-load
-    (list "dired-x" "drag-stuff" "fic-mode" "filladapt" "folding"
+    (list "auctex" "dired-x" "drag-stuff" "fic-mode" "filladapt" "folding"
           "gnuplot" "gnuplot-gui" "lua-mode" "mic-paren"
           "rainbow-mode" "textmate" "undo-tree")
     "List of packages to load automatically."))
@@ -758,9 +758,15 @@ if specified."
 (put 'TeX-master 'safe-local-variable 'stringp)
 (add-to-list 'auto-mode-alist '("\\.mkiv\\'" . context-mode))
 (add-to-list 'auto-mode-alist '("\\.mkii\\'" . context-mode))
-(autoload 'context-mode "custom-context")
+(my:include-content "acme/custom-context")
+
+(folding-add-to-marks-list 'latex-mode "%<<" "%>>")
 ;>>
 
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/emacs/lisp/ac-dict")
+(ac-config-default)
+(add-hook 'auto-complete-mode-hook (lambda nil (local-set-key (kbd "TAB") 'auto-complete)))
 
 ;; Local Variables:
 ;; hide-local-variable-section: t
