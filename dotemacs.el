@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-23 15:57:18 cmauclai>
+; Time-stamp: <2010-11-23 16:51:22 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -685,6 +685,8 @@
 (add-hook 'bibtex-mode-hook 'BibTeX-auto-store)
 (add-hook 'LaTeX-mode-hook 'my:LaTeX-mode-hook)
 
+(put 'TeX-master 'safe-local-variable 'stringp)
+
 ;>> latex-mode ———————————————————————————————————————————————————— >>
 ;<< —— context-mode    ———————————————————————————————————————————— >>
 
@@ -808,7 +810,6 @@
     (local-set-key (kbd "C-c C-c") 'TeX-command-master))
   (setq ConTeXt-use-makefile (not ConTeXt-use-makefile)))
 
-(put 'dired-find-alternate-file 'disabled nil)
 (put 'ConTeXt-modes-list 'safe-local-variable 'listp)
 (put 'ConTeXt-verbose 'safe-local-variable 'booleanp)
 (put 'ConTeXt-use-beta 'safe-local-variable 'booleanp)
