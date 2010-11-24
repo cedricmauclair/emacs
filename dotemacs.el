@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-23 16:51:22 cmauclai>
+; Time-stamp: <2010-11-24 11:02:08 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -107,6 +107,7 @@
  '(delete-old-versions t)
  '(delete-selection-mode t)
  '(directory-free-space-args "-Pkh")
+ '(dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*")
  '(display-time-format "[ %H:%M -- %d/%m ]")
  '(display-time-mode t)
  '(european-calendar-style t)
@@ -544,14 +545,18 @@
    (local-set-key (kbd "M-n")       'help-go-forward)))
 
 ;>> help-mode (end) ——————————————————————————————————————————————— >>
+;<< —— dired-mode      ———————————————————————————————————————————— >>
+
+(add-hook 'dired-mode-hook 'dired-omit-mode)
+
+;>> dired-mode (end) —————————————————————————————————————————————— >>
 ;<< —— folding-mode    ———————————————————————————————————————————— >>
 
 (when (require 'folding nil t)
   (defcustom add-folding-mode-to
     '(("emacs-lisp" ";<<"  ";>>")
       ("lua"        "--<<" "-->>")
-      ("latex"      "%<<"  "%>>")
-      ("context"    "%<<"  "%>>"))
+      ("latex"      "%<<"  "%>>"))
     "List of modes where to activate `folding-mode' automatically."
     :type '(repeat (repeat string))
     :group 'acme)
@@ -799,6 +804,7 @@
   (setq TeX-engine 'luatex)
   (setq TeX-command-default "ConTeXt Full")
   (auto-fill-mode t)
+  (folding-mode t)
   (setq fill-column 80))
 
 (defun ConTeXt-switch-makefile-AUCTeX ()
@@ -814,6 +820,7 @@
 (put 'ConTeXt-verbose 'safe-local-variable 'booleanp)
 (put 'ConTeXt-use-beta 'safe-local-variable 'booleanp)
 
+(folding-add-to-marks-list 'context-mode "%<<" "%>>")
 (add-hook 'ConTeXt-mode-hook 'my-hooks:context-mode)
 
 ;>> context-mode —————————————————————————————————————————————————— >>
@@ -2380,8 +2387,8 @@ or set such a marker."
   '("C-c t o" overwrite-mode)
   '("C-c t i" overwrite-mode))
 
-; (global-set-key
-;  (kbd "<backtab>") (read-kbd-macro "C-x C-\\340 RET"))
+(global-set-key
+ (kbd "<backtab>") (read-kbd-macro "C-x C-\\340 RET"))
 
 (windmove-default-keybindings    'control)
 
