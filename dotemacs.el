@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-24 11:02:08 cmauclai>
+; Time-stamp: <2010-11-25 10:59:54 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -2384,8 +2384,9 @@ or set such a marker."
 (my:define-keys 'global
   '("C-c t"   nil) ; make it a prefix
   '("C-c t m" menu-bar-mode)
-  '("C-c t o" overwrite-mode)
-  '("C-c t i" overwrite-mode))
+  '("C-c t i" overwrite-mode)
+  '("C-c t d" my:dark-theme)
+  '("C-c t l" my:light-theme))
 
 (global-set-key
  (kbd "<backtab>") (read-kbd-macro "C-x C-\\340 RET"))
