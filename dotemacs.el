@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 13:50:34 cmauclai>
+; Time-stamp: <2010-11-25 14:52:55 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -323,7 +323,8 @@
    (default (:inherit italic))))
  '(font-latex-math-face (
    (default (:inherit italic))
-   (((type x) (class color) (min-colors 88)) (:foreground "#89E14B")))) ; "dark khaki" or "#89E14B"
+   (((type x) (class color) (min-colors 88) (background dark)) (:foreground "#89E14B"))
+   (((type x) (class color) (min-colors 88) (background light)) (:foreground "green4"))))
  '(font-latex-sectioning-5-face (
    (default (:inherit (bold font-lock-type-face variable-pitch)))))
  '(font-latex-slide-title-face (
@@ -2399,8 +2400,6 @@ or set such a marker."
   "Changes the theme of the frame `frame' to a dark one. If not
 specified or nil, apply to current frame."
   (interactive)
-  (face-remap-add-relative 'font-latex-math-face
-                           :foreground "#89E14B")
   (modify-frame-parameters nil '((background-mode . dark)
                                  (foreground-color . "gray75")
                                  (background-color . "gray5"))))
@@ -2409,8 +2408,6 @@ specified or nil, apply to current frame."
   "Changes the theme of the frame `frame' to a dark one. If not
 specified or nil, apply to current frame."
   (interactive)
-  (face-remap-add-relative 'font-latex-math-face
-                           :foreground "green4")
   (modify-frame-parameters frame '((background-mode . light)
                                    (foreground-color . "#262626")
                                    (background-color . "#EEEEDD"))))
