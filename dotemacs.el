@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 11:05:46 cmauclai>
+; Time-stamp: <2010-11-25 13:50:34 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -683,9 +683,7 @@
   (local-set-key (kbd "<")           'self-insert-command)
   (local-set-key (kbd ">")           'self-insert-command)
   (face-remap-add-relative 'font-lock-function-name-face
-                           :foreground "OliveDrab")
-                           ;; :weight normal)
-  (folding-mode t))
+                           :foreground "OliveDrab"))
 
 (add-hook 'bibtex-mode-hook 'BibTeX-auto-store)
 (add-hook 'LaTeX-mode-hook 'my:LaTeX-mode-hook)
@@ -2401,6 +2399,8 @@ or set such a marker."
   "Changes the theme of the frame `frame' to a dark one. If not
 specified or nil, apply to current frame."
   (interactive)
+  (face-remap-add-relative 'font-latex-math-face
+                           :foreground "#89E14B")
   (modify-frame-parameters nil '((background-mode . dark)
                                  (foreground-color . "gray75")
                                  (background-color . "gray5"))))
@@ -2409,6 +2409,8 @@ specified or nil, apply to current frame."
   "Changes the theme of the frame `frame' to a dark one. If not
 specified or nil, apply to current frame."
   (interactive)
+  (face-remap-add-relative 'font-latex-math-face
+                           :foreground "green4")
   (modify-frame-parameters frame '((background-mode . light)
                                    (foreground-color . "#262626")
                                    (background-color . "#EEEEDD"))))
