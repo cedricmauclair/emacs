@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 16:50:44 cmauclai>
+; Time-stamp: <2010-11-25 16:52:20 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -678,7 +678,8 @@
   (local-set-key (kbd "<")           'self-insert-command)
   (local-set-key (kbd ">")           'self-insert-command)
   (face-remap-add-relative 'font-lock-function-name-face
-                           :foreground "OliveDrab"))
+                           :foreground "OliveDrab")
+  (folding-mode t))
 
 (add-hook 'bibtex-mode-hook 'BibTeX-auto-store)
 
