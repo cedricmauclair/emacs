@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 16:52:20 cmauclai>
+; Time-stamp: <2010-11-25 16:53:29 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -685,7 +685,7 @@
 
 (put 'TeX-master 'safe-local-variable 'stringp)
 
-(folding-add-to-marks-list 'context-mode "%<<" "%>>")
+(folding-add-to-marks-list 'latex-mode "%<<" "%>>")
 (add-hook 'LaTeX-mode-hook 'my-hooks:latex-mode)
 
 
