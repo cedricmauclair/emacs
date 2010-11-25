@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 10:59:54 cmauclai>
+; Time-stamp: <2010-11-25 11:05:46 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -2267,6 +2267,7 @@ or set such a marker."
   '("M-v"     my:scroll-down)   ; scroll in place
   '("M-p"     previous-line)      ; tired to go from "M-f/b" to "C-p"
   '("M-n"     next-line)          ; tired to go from "M-f/b" to "C-n" (my:next-line ?)
+  '("M-g"     goto-line)
 
   ;; ** Marks/kills **
   '("M-@"   cua-set-mark)    ; was `mark-word', moved to "M-+"
