@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 16:48:32 cmauclai>
+; Time-stamp: <2010-11-25 16:50:44 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -664,7 +664,7 @@
      (require 'preview-latex)
      (require 'bib-cite)))
 
-(defun my-hooks:latex-mode-hook ()
+(defun my-hooks:latex-mode ()
   "Setup LaTeX AUCTeX mode."
   ;; (turn-on-bib-cite) ?
   (turn-on-reftex)
