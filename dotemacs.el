@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 14:52:55 cmauclai>
+; Time-stamp: <2010-11-25 16:48:32 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -556,8 +556,7 @@
 (when (require 'folding nil t)
   (defcustom add-folding-mode-to
     '(("emacs-lisp" ";<<"  ";>>")
-      ("lua"        "--<<" "-->>")
-      ("latex"      "%<<"  "%>>"))
+      ("lua"        "--<<" "-->>"))
     "List of modes where to activate `folding-mode' automatically."
     :type '(repeat (repeat string))
     :group 'acme)
@@ -658,11 +657,6 @@
      (require 'font-latex)
      (require 'reftex)))
 
-(eval-after-load "context"
-  '(progn
-     (require 'font-latex)
-     (require 'reftex)))
-
 (eval-after-load "latex"
   '(progn
      (require 'font-latex)
@@ -670,7 +664,7 @@
      (require 'preview-latex)
      (require 'bib-cite)))
 
-(defun my:LaTeX-mode-hook ()
+(defun my-hooks:latex-mode-hook ()
   "Setup LaTeX AUCTeX mode."
   ;; (turn-on-bib-cite) ?
   (turn-on-reftex)
@@ -687,9 +681,12 @@
                            :foreground "OliveDrab"))
 
 (add-hook 'bibtex-mode-hook 'BibTeX-auto-store)
-(add-hook 'LaTeX-mode-hook 'my:LaTeX-mode-hook)
 
 (put 'TeX-master 'safe-local-variable 'stringp)
+
+(folding-add-to-marks-list 'context-mode "%<<" "%>>")
+(add-hook 'LaTeX-mode-hook 'my-hooks:latex-mode)
+
 
 ;>> latex-mode ———————————————————————————————————————————————————— >>
 ;<< —— context-mode    ———————————————————————————————————————————— >>
@@ -721,6 +718,11 @@
 
 (if ConTeXt-use-beta
     (setenv "PATH" "/DATA/context/tex/texmf-linux/bin:$PATH" t))
+
+(eval-after-load "context"
+  '(progn
+     (require 'font-latex)
+     (require 'reftex)))
 
 (defun my:ConTeXt-expand-options ()
   "Expand options for texexec command."
@@ -1265,6 +1267,18 @@ The KEYS/FUNCS-OR-MAPS arguments are a list of:
        (t
         (eval `(define-key keymap ,(car-safe x)
                  (lambda (arg) (interactive "p") ,(cdr x)))))))))
+
+(defun my:get-key (prompt &optional not-this-command)
+  "Like `read-key-sequence-vector', but arranges for the cursor to be in the
+echo area, does the usual thing for C-g, and possibly returns nil if you use the
+same key as for `this-command'."
+  (let* ((cursor-in-echo-area t)
+         (key (read-key-sequence-vector prompt nil t))
+         (bind (key-binding key)))
+    (message nil)
+    (cond ((and not-this-command (eq bind this-command)) nil)
+          ((eq bind 'keyboard-quit) (keyboard-quit))
+          (t key))))
 
 ;>> helper functions (end) ———————————————————————————————————————— >>
 ;<< ———— buffers functions ———————————————————————————————————————— >>
