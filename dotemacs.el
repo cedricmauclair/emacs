@@ -1,4 +1,4 @@
-; Time-stamp: <2010-11-25 16:53:29 cmauclai>
+; Time-stamp: <2010-12-17 17:00:56 cmauclai>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -787,6 +787,9 @@
               '(lambda () (local-set-key (kbd "<f7>") 'etexshow-quit))))
 
   (my:define-keys 'local
+                  ; '("C-c C-c" nil)
+                  ; '("C-c C-c C-m" (lambda ()
+                                    ; (interactive) (save-buffer) (my:compile "make -k")))
                   '("C-c C-c" (lambda ()
                                 (interactive) (save-buffer) (my:compile "make -k")))
                   '("C-c C-v" my:context-view-memoir)
